@@ -1,12 +1,11 @@
 import axios from 'axios'
 
 const authService = {
-  async register(username, password, roleName) {
+  async register(username, password) {
     try {
       const response = await axios.post('http://localhost:3000/auth/register', {
         username,
-        password,
-        roleName
+        password
       })
       return response.data
     } catch (error) {

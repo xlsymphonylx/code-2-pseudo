@@ -27,6 +27,9 @@
                 <div class="control">
                   <button type="submit" class="button is-primary">Iniciar Sesión</button>
                 </div>
+                <div class="control">
+                  <router-link to="/registrarse" class="button is-info">Registrarse</router-link>
+                </div>
               </div>
             </form>
           </div>
@@ -56,7 +59,6 @@ const login = async () => {
     // Assuming you're using Vue Router, replace 'home' with the actual route name for your home page
     router.push({ path: 'home' })
     router.go()
-
   } catch (error) {
     // Handle login errors here
     console.error(error.message)
