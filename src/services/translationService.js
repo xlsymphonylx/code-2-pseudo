@@ -6,7 +6,7 @@ const translationService = {
       const token = localStorage.getItem('token')
       console.log(token)
       const response = await axios.post(
-        'http://localhost:3000/translate/translateJS',
+        'http://ec2-3-148-106-81.us-east-2.compute.amazonaws.com/translate/translateJS',
         {
           code
         },
@@ -29,7 +29,7 @@ const translationService = {
       console.log(token)
 
       const response = await axios.post(
-        'http://localhost:3000/translate/translatePseudo',
+        'http://ec2-3-148-106-81.us-east-2.compute.amazonaws.com/translate/translatePseudo',
         {
           code
         },
@@ -49,11 +49,15 @@ const translationService = {
   saveCourse: async (courseData) => {
     try {
       const token = localStorage.getItem('token')
-      const response = await axios.post('http://localhost:3000/translate/saveCourse', courseData, {
-        headers: {
-          Authorization: `Bearer ${token}`
+      const response = await axios.post(
+        'http://ec2-3-148-106-81.us-east-2.compute.amazonaws.com/translate/saveCourse',
+        courseData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
         }
-      })
+      )
       return response.data.course
     } catch (error) {
       console.error(error)
@@ -65,7 +69,7 @@ const translationService = {
     try {
       const token = localStorage.getItem('token')
       const response = await axios.put(
-        `http://localhost:3000/translate/editCourse/${courseId}`,
+        `http://ec2-3-148-106-81.us-east-2.compute.amazonaws.com/translate/editCourse/${courseId}`,
         courseData,
         {
           headers: {
@@ -83,11 +87,14 @@ const translationService = {
   getAllCourses: async () => {
     try {
       const token = localStorage.getItem('token')
-      const response = await axios.get('http://localhost:3000/translate/getAllCourses', {
-        headers: {
-          Authorization: `Bearer ${token}`
+      const response = await axios.get(
+        'http://ec2-3-148-106-81.us-east-2.compute.amazonaws.com/translate/getAllCourses',
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
         }
-      })
+      )
       return response.data.courses
     } catch (error) {
       console.error(error)
@@ -98,11 +105,14 @@ const translationService = {
   getOfficialCourses: async () => {
     try {
       const token = localStorage.getItem('token')
-      const response = await axios.get('http://localhost:3000/translate/getOfficialCourses', {
-        headers: {
-          Authorization: `Bearer ${token}`
+      const response = await axios.get(
+        'http://ec2-3-148-106-81.us-east-2.compute.amazonaws.com/translate/getOfficialCourses',
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
         }
-      })
+      )
       return response.data.officialCourses
     } catch (error) {
       console.error(error)
@@ -113,11 +123,14 @@ const translationService = {
   getNonOfficialCourses: async () => {
     try {
       const token = localStorage.getItem('token')
-      const response = await axios.get('http://localhost:3000/translate/getNonOfficialCourses', {
-        headers: {
-          Authorization: `Bearer ${token}`
+      const response = await axios.get(
+        'http://ec2-3-148-106-81.us-east-2.compute.amazonaws.com/translate/getNonOfficialCourses',
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
         }
-      })
+      )
       return response.data.nonOfficialCourses
     } catch (error) {
       console.error(error)
@@ -129,7 +142,7 @@ const translationService = {
     try {
       const token = localStorage.getItem('token')
       const response = await axios.delete(
-        `http://localhost:3000/translate/deleteCourse/${courseId}`,
+        `http://ec2-3-148-106-81.us-east-2.compute.amazonaws.com/translate/deleteCourse/${courseId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`
@@ -147,7 +160,7 @@ const translationService = {
     try {
       const token = localStorage.getItem('token')
       const response = await axios.put(
-        `http://localhost:3000/translate/changeSubscriptionModel/${newSubscriptionModel}`,
+        `http://ec2-3-148-106-81.us-east-2.compute.amazonaws.com/translate/changeSubscriptionModel/${newSubscriptionModel}`,
         null,
         {
           headers: {
