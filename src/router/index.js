@@ -20,61 +20,26 @@ const routes = [
         path: '/inicio',
         name: 'home',
         component: () => HomeView,
-        beforeEnter: (to, from, next) => {
-          if (isAuthenticated()) {
-            next()
-          } else {
-            next({ name: 'login' })
-          }
-        }
       },
       {
         path: '/biblioteca',
         name: 'library',
         component: () => LibraryView,
-        beforeEnter: (to, from, next) => {
-          if (isAuthenticated()) {
-            next()
-          } else {
-            next({ name: 'login' })
-          }
-        }
       },
       {
         path: '/mi-libreria',
         name: 'bookshelf',
         component: () => BookshelfView,
-        beforeEnter: (to, from, next) => {
-          if (isAuthenticated()) {
-            next()
-          } else {
-            next({ name: 'login' })
-          }
-        }
       },
       {
         path: '/traduccion',
         name: 'translation',
         component: () => TranslationView,
-        beforeEnter: (to, from, next) => {
-          if (isAuthenticated()) {
-            next()
-          } else {
-            next({ name: 'login' })
-          }
-        }
       },
       {
         path: '/planes',
         name: 'plans',
         component: () => PricePlansView,
-        beforeEnter: (to, from, next) => {
-          if (isAuthenticated()) {
-            next()
-          } else {
-            next({ name: 'login' })
-          }
-        }
       }
     ]
   },
@@ -85,25 +50,11 @@ const routes = [
         path: '/',
         name: 'login',
         component: () => LoginView,
-        beforeEnter: (to, from, next) => {
-          if (!isAuthenticated()) {
-            next()
-          } else {
-            next({ name: 'home' })
-          }
-        }
       },
       {
         path: '/registrarse',
         name: 'signup',
         component: () => SignUpView,
-        beforeEnter: (to, from, next) => {
-          if (!isAuthenticated()) {
-            next()
-          } else {
-            next({ name: 'home' })
-          }
-        }
       }
     ]
   }
@@ -114,4 +65,17 @@ const router = createRouter({
   routes
 })
 
+router.beforeEach((to, from, next) => {
+  const authenticatedRoutes = ['login', 'signup'] // List of routes accessible to authenticated users
+
+  if (authenticatedRoutes.includes(to.name) && isAuthenticated()) {
+    // If authenticated user tries to access login or signup
+    next({ name: 'home' }) // Redirect to home page or any other authorized route
+  } else if (!authenticatedRoutes.includes(to.name) && !isAuthenticated()) {
+    // If not authenticated and trying to access a protected route
+    next({ name: 'login' }) // Redirect to login page
+  } else {
+    next() // Continue navigation
+  }
+})
 export default router
