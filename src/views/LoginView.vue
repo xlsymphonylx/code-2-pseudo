@@ -7,9 +7,9 @@
             <h1 class="title has-text-centered">Iniciar Sesión</h1>
             <form @submit.prevent="login">
               <div class="field">
-                <label class="label">Usuario</label>
+                <label class="label">Email</label>
                 <div class="control">
-                  <input v-model="username" class="input" type="text" placeholder="Usuario" />
+                  <input v-model="email" class="input" type="text" placeholder="Email" />
                 </div>
               </div>
               <div class="field">
@@ -44,21 +44,24 @@ import { ref } from 'vue'
 import authService from '../services/authService' // Replace with actual path
 import { useRouter } from 'vue-router'
 const router = useRouter()
-const username = ref('')
+const email = ref('')
 const password = ref('')
 
 const login = async () => {
   try {
-    const response = await authService.login(username.value, password.value)
+    const response = await authService.login(email.value, password.value)
     const { token } = response
+    const { user } = response
 
     // Save token to localStorage
     localStorage.setItem('token', token)
+    localStorage.setItem('user', JSON.stringify(user))
 
     // Redirect to home page
     // Assuming you're using Vue Router, replace 'home' with the actual route name for your home page
     router.push({ path: 'home' })
     router.go()
+
   } catch (error) {
     // Handle login errors here
     console.error(error.message)

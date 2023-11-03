@@ -1,11 +1,20 @@
 import axios from 'axios'
 
 const authService = {
-  async register(username, password) {
+  async register({ username, password, email, firstName, lastName, profileImg }) {
     try {
-      const response = await axios.post('http://ec2-3-148-106-81.us-east-2.compute.amazonaws.com/auth/register', {
-        username,
-        password
+      const formData = new FormData()
+      formData.append('username', username)
+      formData.append('password', password)
+      formData.append('email', email)
+      formData.append('first_name', firstName)
+      formData.append('last_name', lastName)
+      formData.append('profile_img', profileImg) // Assuming profileImg is a File object
+
+      const response = await axios.post(`${import.meta.env.VITE_API_HOST}auth/register`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
       })
       return response.data
     } catch (error) {
@@ -19,12 +28,13 @@ const authService = {
     }
   },
 
-  async login(username, password) {
+  async login(email, password) {
     try {
-      const response = await axios.post('http://ec2-3-148-106-81.us-east-2.compute.amazonaws.com/auth/login', {
-        username,
+      const response = await axios.post(`${import.meta.env.VITE_API_HOST}auth/login`, {
+        email,
         password
       })
+      console.log(response.data)
       return response.data
     } catch (error) {
       if (error.response.status === 401) {

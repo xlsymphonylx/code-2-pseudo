@@ -6,7 +6,7 @@ const translationService = {
       const token = localStorage.getItem('token')
       console.log(token)
       const response = await axios.post(
-        'http://ec2-3-148-106-81.us-east-2.compute.amazonaws.com/translate/translateJS',
+        `${import.meta.env.VITE_API_HOST}translate/translateJS`,
         {
           code
         },
@@ -29,7 +29,7 @@ const translationService = {
       console.log(token)
 
       const response = await axios.post(
-        'http://ec2-3-148-106-81.us-east-2.compute.amazonaws.com/translate/translatePseudo',
+        `${import.meta.env.VITE_API_HOST}translate/translatePseudo`,
         {
           code
         },
@@ -50,7 +50,7 @@ const translationService = {
     try {
       const token = localStorage.getItem('token')
       const response = await axios.post(
-        'http://ec2-3-148-106-81.us-east-2.compute.amazonaws.com/translate/saveCourse',
+        `${import.meta.env.VITE_API_HOST}translate/saveCourse`,
         courseData,
         {
           headers: {
@@ -69,7 +69,7 @@ const translationService = {
     try {
       const token = localStorage.getItem('token')
       const response = await axios.put(
-        `http://ec2-3-148-106-81.us-east-2.compute.amazonaws.com/translate/editCourse/${courseId}`,
+        `${import.meta.env.VITE_API_HOST}translate/editCourse/${courseId}`,
         courseData,
         {
           headers: {
@@ -87,14 +87,11 @@ const translationService = {
   getAllCourses: async () => {
     try {
       const token = localStorage.getItem('token')
-      const response = await axios.get(
-        'http://ec2-3-148-106-81.us-east-2.compute.amazonaws.com/translate/getAllCourses',
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+      const response = await axios.get(`${import.meta.env.VITE_API_HOST}translate/getAllCourses`, {
+        headers: {
+          Authorization: `Bearer ${token}`
         }
-      )
+      })
       return response.data.courses
     } catch (error) {
       console.error(error)
@@ -106,7 +103,7 @@ const translationService = {
     try {
       const token = localStorage.getItem('token')
       const response = await axios.get(
-        'http://ec2-3-148-106-81.us-east-2.compute.amazonaws.com/translate/getOfficialCourses',
+        `${import.meta.env.VITE_API_HOST}translate/getOfficialCourses`,
         {
           headers: {
             Authorization: `Bearer ${token}`
@@ -124,7 +121,7 @@ const translationService = {
     try {
       const token = localStorage.getItem('token')
       const response = await axios.get(
-        'http://ec2-3-148-106-81.us-east-2.compute.amazonaws.com/translate/getNonOfficialCourses',
+        `${import.meta.env.VITE_API_HOST}translate/getNonOfficialCourses`,
         {
           headers: {
             Authorization: `Bearer ${token}`
@@ -142,7 +139,7 @@ const translationService = {
     try {
       const token = localStorage.getItem('token')
       const response = await axios.delete(
-        `http://ec2-3-148-106-81.us-east-2.compute.amazonaws.com/translate/deleteCourse/${courseId}`,
+        `${import.meta.env.VITE_API_HOST}translate/deleteCourse/${courseId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`
@@ -160,7 +157,7 @@ const translationService = {
     try {
       const token = localStorage.getItem('token')
       const response = await axios.put(
-        `http://ec2-3-148-106-81.us-east-2.compute.amazonaws.com/translate/changeSubscriptionModel/${newSubscriptionModel}`,
+        `${import.meta.env.VITE_API_HOST}translate/changeSubscriptionModel/${newSubscriptionModel}`,
         null,
         {
           headers: {

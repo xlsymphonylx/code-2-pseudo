@@ -2,11 +2,21 @@
 import { RouterLink, RouterView } from 'vue-router'
 import '@fortawesome/fontawesome-free/css/all.css'
 import { useRouter } from 'vue-router'
+import { ref, onMounted } from 'vue'
+const host = import.meta.env.VITE_API_HOST
 const router = useRouter()
+const user = ref(null)
+onMounted(() => {
+  const userData = JSON.parse(localStorage.getItem('user'))
+  console.log(host);
+  if (userData) {
+    user.value = userData
+  }
+})
 const logout = () => {
   // Remove the token from local storage
   localStorage.removeItem('token')
-
+  localStorage.removeItem('user')
   router.push({ name: 'login' }) // Assuming 'login' is the route name for the login page
   router.go()
 }
@@ -41,6 +51,14 @@ const logout = () => {
       </div>
 
       <div class="navbar-end">
+        <div class="navbar-item" v-if="user">
+          <p class="has-text-light">¡Hola, {{ user.username }}!</p>
+        </div>
+        <div class="navbar-item" v-if="user">
+          <figure class="image is-flex is-align-items-center">
+            <img class="is-rounded" :src="`${host}${user.profile_img}`" alt="Profile Image" />
+          </figure>
+        </div>
         <div class="navbar-item">
           <div class="buttons">
             <a @click="logout" class="button is-danger">
