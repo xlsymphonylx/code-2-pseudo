@@ -135,7 +135,7 @@ const translateValidation = [
 
 const validations = [
   {
-    validate: (value) => value.trim() !== '',
+    validate: (value) => !!value,
     errorMessage: 'Por favor, introduce el lenguaje a traducir.',
     isValidRef: isSelectedTranslationTypeValid,
     refValue: selectedTranslationType
@@ -267,7 +267,8 @@ const saveCourse = async () => {
   try {
     const translation = {
       originalMessage: programCode.value, // Assuming programCode holds the original message
-      translationType: translateState.value
+      translationType: translateState.value,
+      translationTypeId: selectedTranslationType.value // Assuming it's a non-official course
     }
 
     const response = await translationService.saveCourse({
