@@ -3,7 +3,7 @@ import { RouterLink, RouterView } from 'vue-router'
 import '@fortawesome/fontawesome-free/css/all.css'
 import { useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
-const host = import.meta.env.VITE_API_HOST
+const host = 'http://ec2-3-148-106-81.us-east-2.compute.amazonaws.com/'
 const router = useRouter()
 const user = ref(null)
 const burgerMenuActive = ref(false)

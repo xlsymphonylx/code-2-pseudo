@@ -1,5 +1,5 @@
 import axios from 'axios'
-const host = import.meta.env.VITE_API_HOST
+const host = 'http://ec2-3-148-106-81.us-east-2.compute.amazonaws.com/'
 const authService = {
   async register({ username, password, email, firstName, lastName, profileImg }) {
     console.log(host)
