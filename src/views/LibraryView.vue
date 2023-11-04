@@ -21,7 +21,9 @@
               :title="course.name"
               :description="course.description"
               :originalMessage="course.SavedTranslation.originalMessage"
-              :translationType="course.SavedTranslation.translationType"
+              :state="course.SavedTranslation.translationType"
+              :selectedTranslationType="course.SavedTranslation.translationTypeId"
+              :codeTitle="course.SavedTranslation.TranslationType.title"
             />
           </div>
         </div>
@@ -33,6 +35,8 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import translationService from '../services/translationService'
+import { showErrorDialog } from '../utils/alerts'
+import SavedTranslationComponent from '../components/SavedTranslationComponent.vue'
 
 const officialCourses = ref([])
 const selectedCourse = ref(null)
@@ -41,6 +45,7 @@ onMounted(async () => {
   try {
     officialCourses.value = await translationService.getOfficialCourses()
   } catch (error) {
+    await showErrorDialog('Error!', error.message)
     console.error(error.message)
   }
 })

@@ -6,9 +6,14 @@ import { ref, onMounted } from 'vue'
 const host = import.meta.env.VITE_API_HOST
 const router = useRouter()
 const user = ref(null)
+const burgerMenuActive = ref(false)
+
+const toggleBurgerMenu = () => {
+  burgerMenuActive.value = !burgerMenuActive.value
+}
 onMounted(() => {
   const userData = JSON.parse(localStorage.getItem('user'))
-  console.log(host);
+  console.log(host)
   if (userData) {
     user.value = userData
   }
@@ -34,6 +39,7 @@ const logout = () => {
         aria-label="menu"
         aria-expanded="false"
         data-target="navbarBasicExample"
+        @click="toggleBurgerMenu"
       >
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
@@ -41,7 +47,7 @@ const logout = () => {
       </a>
     </div>
 
-    <div id="navbarBasicExample" class="navbar-menu">
+    <div id="navbarBasicExample" class="navbar-menu" :class="{ 'is-active': burgerMenuActive }">
       <div class="navbar-start">
         <router-link to="/inicio" class="navbar-item"> Inicio </router-link>
         <router-link to="/biblioteca" class="navbar-item"> Biblioteca </router-link>
@@ -52,9 +58,9 @@ const logout = () => {
 
       <div class="navbar-end">
         <div class="navbar-item" v-if="user">
-          <p class="has-text-light">¡Hola, {{ user.username }}!</p>
+          <p class="has-text-info">¡Hola, {{ user.username }}!</p>
         </div>
-        <div class="navbar-item" v-if="user">
+        <div class="navbar-item" v-if="user && !burgerMenuActive">
           <figure class="image is-flex is-align-items-center">
             <img class="is-rounded" :src="`${host}${user.profile_img}`" alt="Profile Image" />
           </figure>

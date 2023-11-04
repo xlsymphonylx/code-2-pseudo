@@ -49,17 +49,21 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import translationService from '../services/translationService'
+import { showErrorDialog } from '../utils/alerts'
 const props = defineProps({
   title: String,
   description: String,
   originalMessage: String,
-  translationType: String
+  selectedTranslationType: Number,
+  state: String,
+  codeTitle: String
 })
 const programCode = ref(props.originalMessage || '')
 const pseudoCode = ref('')
-let translateState = ref(props.translationType || 'js-to-pseudo')
-const programTitle = ref('Javascript')
+let translateState = ref(props.translationType || 'code-to-pseudo')
+const programTitle = ref('Codigo')
 const pseudoTitle = ref('Pseudocódigo')
+
 const swapContent = () => {
   const tempCode = programCode.value
   programCode.value = pseudoCode.value
@@ -70,30 +74,34 @@ const swapContent = () => {
   pseudoTitle.value = tempTitle
 
   // Toggle the translation state
-  translateState.value = translateState.value === 'js-to-pseudo' ? 'pseudo-to-js' : 'js-to-pseudo'
+  translateState.value =
+    translateState.value === 'code-to-pseudo' ? 'pseudo-to-js' : 'code-to-pseudo'
 }
 
 const translate = async () => {
   try {
-    if (translateState.value === 'js-to-pseudo') {
-      let jsCode = programCode.value
-      let pseudoTranslated = await translationService.translateJS(jsCode)
+    let programCodeVal = programCode.value
+    let translationTypeId = props.selectedTranslationType
+    let state = translateState.value
+    let translated = await translationService.translateCode(
+      programCodeVal,
+      translationTypeId,
+      state
+    )
 
-      pseudoCode.value = pseudoTranslated
-    } else if (translateState.value === 'pseudo-to-js') {
-      let pseudoCodeVal = pseudoCode.value
-      let jsTranslated = await translationService.translatePseudo(pseudoCodeVal)
-
-      programCode.value = jsTranslated
-    }
+    pseudoCode.value = translated
   } catch (error) {
+    await showErrorDialog('Error!', error.message)
     console.error(error.message)
   }
 }
 onMounted(() => {
-  if (props.swap === 'pseudo-to-js') {
+  if (props.state === 'pseudo-to-js') {
     programTitle.value = 'Pseudocódigo'
-    pseudoTitle.value = 'Javascript'
+    pseudoTitle.value = props.codeTitle
+  } else {
+    programTitle.value = props.codeTitle
+    pseudoTitle.value = 'Pseudocódigo'
   }
 })
 </script>

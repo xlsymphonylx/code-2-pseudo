@@ -1,37 +1,16 @@
 import axios from 'axios'
 
 const translationService = {
-  translateJS: async (code) => {
+  translateCode: async (code, translationTypeId, translationState) => {
     try {
       const token = localStorage.getItem('token')
-      console.log(token)
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_HOST}translate/translateJS`,
-        {
-          code
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
-      )
-      return response.data.translatedCode
-    } catch (error) {
-      console.error(error)
-      throw new Error('Error en la traducción')
-    }
-  },
-
-  translatePseudo: async (code) => {
-    try {
-      const token = localStorage.getItem('token')
-      console.log(token)
 
       const response = await axios.post(
-        `${import.meta.env.VITE_API_HOST}translate/translatePseudo`,
+        `${import.meta.env.VITE_API_HOST}translate/translateCode`,
         {
-          code
+          code,
+          translationTypeId,
+          translationState
         },
         {
           headers: {
@@ -81,6 +60,23 @@ const translationService = {
     } catch (error) {
       console.error(error)
       throw new Error('Error al editar el curso')
+    }
+  },
+  getAllTranslationTypes: async () => {
+    try {
+      const token = localStorage.getItem('token')
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_HOST}translate/getAllTranslationTypes`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      )
+      return response.data.types
+    } catch (error) {
+      console.error(error)
+      throw new Error('Error al obtener los cursos')
     }
   },
 
