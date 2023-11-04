@@ -1,7 +1,8 @@
 import axios from 'axios'
-
+const host = import.meta.env.VITE_API_HOST
 const authService = {
   async register({ username, password, email, firstName, lastName, profileImg }) {
+    console.log(host)
     try {
       const formData = new FormData()
       formData.append('username', username)
@@ -11,7 +12,7 @@ const authService = {
       formData.append('last_name', lastName)
       formData.append('profile_img', profileImg) // Assuming profileImg is a File object
 
-      const response = await axios.post(`${import.meta.env.VITE_API_HOST}auth/register`, formData, {
+      const response = await axios.post(`${host}auth/register`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -30,7 +31,7 @@ const authService = {
 
   async login(email, password) {
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_HOST}auth/login`, {
+      const response = await axios.post(`${host}auth/login`, {
         email,
         password
       })

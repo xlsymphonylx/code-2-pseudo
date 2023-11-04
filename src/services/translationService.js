@@ -1,4 +1,5 @@
 import axios from 'axios'
+const host = import.meta.env.VITE_API_HOST
 
 const translationService = {
   translateCode: async (code, translationTypeId, translationState) => {
@@ -6,7 +7,7 @@ const translationService = {
       const token = localStorage.getItem('token')
 
       const response = await axios.post(
-        `${import.meta.env.VITE_API_HOST}translate/translateCode`,
+        `${host}translate/translateCode`,
         {
           code,
           translationTypeId,
@@ -28,15 +29,11 @@ const translationService = {
   saveCourse: async (courseData) => {
     try {
       const token = localStorage.getItem('token')
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_HOST}translate/saveCourse`,
-        courseData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+      const response = await axios.post(`${host}translate/saveCourse`, courseData, {
+        headers: {
+          Authorization: `Bearer ${token}`
         }
-      )
+      })
       return response.data.course
     } catch (error) {
       console.error(error)
@@ -47,15 +44,11 @@ const translationService = {
   editCourse: async (courseId, courseData) => {
     try {
       const token = localStorage.getItem('token')
-      const response = await axios.put(
-        `${import.meta.env.VITE_API_HOST}translate/editCourse/${courseId}`,
-        courseData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+      const response = await axios.put(`${host}translate/editCourse/${courseId}`, courseData, {
+        headers: {
+          Authorization: `Bearer ${token}`
         }
-      )
+      })
       return response.data.course
     } catch (error) {
       console.error(error)
@@ -65,14 +58,11 @@ const translationService = {
   getAllTranslationTypes: async () => {
     try {
       const token = localStorage.getItem('token')
-      const response = await axios.get(
-        `${import.meta.env.VITE_API_HOST}translate/getAllTranslationTypes`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+      const response = await axios.get(`${host}translate/getAllTranslationTypes`, {
+        headers: {
+          Authorization: `Bearer ${token}`
         }
-      )
+      })
       return response.data.types
     } catch (error) {
       console.error(error)
@@ -83,7 +73,7 @@ const translationService = {
   getAllCourses: async () => {
     try {
       const token = localStorage.getItem('token')
-      const response = await axios.get(`${import.meta.env.VITE_API_HOST}translate/getAllCourses`, {
+      const response = await axios.get(`${host}translate/getAllCourses`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -98,14 +88,11 @@ const translationService = {
   getOfficialCourses: async () => {
     try {
       const token = localStorage.getItem('token')
-      const response = await axios.get(
-        `${import.meta.env.VITE_API_HOST}translate/getOfficialCourses`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+      const response = await axios.get(`${host}translate/getOfficialCourses`, {
+        headers: {
+          Authorization: `Bearer ${token}`
         }
-      )
+      })
       return response.data.officialCourses
     } catch (error) {
       console.error(error)
@@ -116,14 +103,11 @@ const translationService = {
   getNonOfficialCourses: async () => {
     try {
       const token = localStorage.getItem('token')
-      const response = await axios.get(
-        `${import.meta.env.VITE_API_HOST}translate/getNonOfficialCourses`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+      const response = await axios.get(`${host}translate/getNonOfficialCourses`, {
+        headers: {
+          Authorization: `Bearer ${token}`
         }
-      )
+      })
       return response.data.nonOfficialCourses
     } catch (error) {
       console.error(error)
@@ -134,14 +118,11 @@ const translationService = {
   deleteCourse: async (courseId) => {
     try {
       const token = localStorage.getItem('token')
-      const response = await axios.delete(
-        `${import.meta.env.VITE_API_HOST}translate/deleteCourse/${courseId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+      const response = await axios.delete(`${host}translate/deleteCourse/${courseId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
         }
-      )
+      })
       return response.data.message
     } catch (error) {
       console.error(error)
@@ -153,7 +134,7 @@ const translationService = {
     try {
       const token = localStorage.getItem('token')
       const response = await axios.put(
-        `${import.meta.env.VITE_API_HOST}translate/changeSubscriptionModel/${newSubscriptionModel}`,
+        `${host}translate/changeSubscriptionModel/${newSubscriptionModel}`,
         null,
         {
           headers: {
